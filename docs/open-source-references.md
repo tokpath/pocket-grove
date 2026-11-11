@@ -1,16 +1,16 @@
 # 开源参考项目评估（2026-11-11）
 
-> 问题：哪个开源项目最适合作为 sparkgame 的基础？
-> 结论：**没有一个适合直接当平台底座**；sparkgame 自建平台，按模块借鉴下列项目。
+> 问题：哪个开源项目最适合作为 Pocketgrove 的基础？
+> 结论：**没有一个适合直接当平台底座**；Pocketgrove 自建平台，按模块借鉴下列项目。
 > **更新（2026-11-11）**：产品决定全面采纳 ohmygame 的技术方向，P0 代码评审后定为**直接用它底层的 Pi SDK，移植它的试玩工具、画板模型和检查点，不整体 fork daemon**（第 4.2 节、[ohmygame-review.md](ohmygame-review.md)、[architecture.md](architecture.md)）。第 3、4、4.1 节里以「题材引擎为主」为前提的判断保留作记录。
 
 ## 1. 我们需要的底座是什么
 
-sparkgame 是**托管的多用户 Web 平台**：服务端调用平台托管的 Claude 生成游戏（用户不能自带 Key）、订阅收费、题材模板、游戏信息流、改编、排行榜、沙箱游玩。评估时重点看：形态是否一致、能否多用户托管、模型调用方式、许可证、成熟度。
+Pocketgrove 是**托管的多用户 Web 平台**：服务端调用平台托管的 Claude 生成游戏（用户不能自带 Key）、订阅收费、题材模板、游戏信息流、改编、排行榜、沙箱游玩。评估时重点看：形态是否一致、能否多用户托管、模型调用方式、许可证、成熟度。
 
 ## 2. 候选对比
 
-| 项目 | 形态 | 模型调用 | 许可证 | 成熟度 | 与 sparkgame 的契合度 |
+| 项目 | 形态 | 模型调用 | 许可证 | 成熟度 | 与 Pocketgrove 的契合度 |
 |---|---|---|---|---|---|
 | [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) | Claude Code 配置，本地开发者使用 | 本机 Claude Code | MIT | 约 3.8 万 star，v1.3.0 | 低：不是平台；适合做流程/题材参考和内部精修 |
 | [WhiteTowerAI/ohmygame](https://github.com/WhiteTowerAI/ohmygame) | Electron 桌面应用 + 本地 daemon，封装 Pi 编码 agent | 用户自带 Key，40+ 模型服务商 | Apache-2.0（名称和 logo 除外） | 约 2k star，1,738 commits，beta 5（2026-10） | 低：桌面端 + 自带 Key，与"托管 + 订阅"相反；更像竞品 |
@@ -29,7 +29,7 @@ sparkgame 是**托管的多用户 Web 平台**：服务端调用平台托管的 
 
 ### GameSmith：平台骨架参考
 可借鉴（MIT）：
-- 游戏 iframe 沙箱不带 `allow-same-origin`，游戏拿不到 cookie 和平台 API；存档和分数通过 `GameSave`（get / set / submitScore）桥接——与我们的 spark-sdk 设计一致。
+- 游戏 iframe 沙箱不带 `allow-same-origin`，游戏拿不到 cookie 和平台 API；存档和分数通过 `GameSave`（get / set / submitScore）桥接——与我们的 pocketgrove-sdk 设计一致。
 - 草稿与已发布快照分离。
 - 每次写文件前校验（JS 语法、模块解析、未定义标识符、精灵图规格）。
 - `playtest`（模拟一分钟操作、读取 `state()` 钩子）+ `look`（无头 Chrome 截图让 agent 自评美术）。
@@ -54,7 +54,7 @@ sparkgame 是**托管的多用户 Web 平台**：服务端调用平台托管的 
 
 ## 4. 如果"借鉴后修改"（fork 改造），选哪个起步
 
-| 候选 | 改造成 sparkgame 要动什么 | 判断 |
+| 候选 | 改造成 Pocketgrove 要动什么 | 判断 |
 |---|---|---|
 | **GameSmith** | 把 OpenAI 换成 Claude；加题材引擎、信息流、改编、账号体系、订阅与额度；单节点改成"平台 + 生成 worker" | **推荐作为平台起点**：技术栈（Next.js + SQLite + 服务端 agent + 沙箱 iframe + 存档/排行榜桥接）与我们已选的一致；代码量小、MIT，fork 后完全归我们，不用跟上游 |
 | **prompt-to-playable** | 3D 动作 kit 换成 2D 放置 / 经营 / 放置 RPG 引擎；保留 schema 校验、修复循环、JSON Patch 修改、可解性检查 | **推荐作为题材引擎的起点**：直接复用它的结构（schema / engine / render 分包），重写引擎内容 |

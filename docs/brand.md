@@ -1,7 +1,7 @@
-# 品牌（v0.2，2026-11-11）
+# 品牌（v0.3，2026-11-11）
 
-> 已确定：海外品牌名 **Pocketgrove**；口号 **Play in seconds. Make it yours in a sentence.**；点数单位 **Seeds**（原 Sparks）；视觉识别用 **A. Pocket Sprout 口袋嫩芽**，只做浅色界面（第 5 节）。
-> `sparkgame` 保留为内部项目代号（仓库、目录名不改），对外一律用 Pocketgrove。
+> 已确定：品牌名 **Pocketgrove**；口号 **Play in seconds. Make it yours in a sentence.**；点数单位 **Seeds**（原 Sparks）；视觉识别用 **A. Pocket Sprout 口袋嫩芽**，只做浅色界面（第 5 节）。
+> **内外统一（2026-11-11）**：原内部代号 `sparkgame` 停用，文档、协议和接口名一律用 Pocketgrove（例如 `pocketgrove-sdk`、`PocketgroveAdapter`、`@pocketgrove/runtime`）。代码仓库是 [tokpath/pocket-grove](https://github.com/tokpath/pocket-grove)。本地目录名和代码包名在商标检索通过后、P0 写代码之前再改（见第 6 节）。
 
 ## 1. 名字
 
@@ -121,6 +121,8 @@
 2. **相近产品**：App Store 上有一款主题相近的「Evergrove Idle: Grow Magic」（种魔法树林的放置游戏）。名字不同，但商标检索时要一起评估混淆风险。
 3. **pocketgrove.com 不在我们手里**：用户可能直接输入 .com 访问到别人的网站。分享链接、广告和邮件统一用 .gg 主域。
 4. **视觉识别**已定（第 5 节）；绿色在理财、健康类 app 里常见，要靠口袋造型和字体拉开差异，商标检索时 logo 图形也一起检索。
+5. **本地目录和代码包名还叫 sparkgame**：等商标检索通过、P0 开始写代码之前一次改完。改目录名之前，要先把 Claude 的项目记忆迁到新路径，否则新会话读不到已定的决定。
+6. **仓库是公开的**：tokpath/pocket-grove 为公开仓库（2026-11-11 产品决定直接公开推送），品牌名、定价和架构在商标检索之前已经公开，上面第 1 条的商标检索要尽快做。
 
 ## 参考资料
 - [GAME SPARK PTE. LTD. – Trademark Portfolio](https://trademarkdir.com/owner/game-spark-pte-ltd)

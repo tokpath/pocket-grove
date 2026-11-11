@@ -1,6 +1,6 @@
 # Art bake-off harness
 
-Compares image models on sparkgame's own asset list (see `../docs/art-bakeoff-plan.md`).
+Compares image models on Pocketgrove's own asset list (see `../docs/art-bakeoff-plan.md`).
 Output: `out/` (images + per-image metadata) and `report.html` (side-by-side contact sheets,
 automatic metrics, a scoring form whose scores export as JSON).
 

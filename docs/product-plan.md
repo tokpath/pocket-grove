@@ -1,14 +1,15 @@
-# sparkgame 产品方案（v1.0，2026-11-11）
+# Pocketgrove 产品方案（v1.1，2026-11-11）
 
-> **对外品牌为 Pocketgrove**（口号 *Play in seconds. Make it yours in a sentence.*，点数单位 Seeds，见 [brand.md](brand.md)）；sparkgame 是内部项目代号。
+> **对外品牌为 Pocketgrove**（口号 *Play in seconds. Make it yours in a sentence.*，点数单位 Seeds，见 [brand.md](brand.md)）。原内部代号 sparkgame 已于 2026-11-11 停用，内外统一叫 Pocketgrove。
 >
 > 本文是总体方案与路线图；产品细节以 [prd.md](prd.md) 为准，定价以 [pricing.md](pricing.md) 为准，两者冲突时以它们为准。
 >
 > 版本记录
+> - v1.1：内外统一叫 Pocketgrove，停用内部代号 sparkgame；`spark-sdk` 改名为 `pocketgrove-sdk`，`SparkAdapter` 改名为 `PocketgroveAdapter`；代码仓库为 tokpath/pocket-grove。
 > - v1.0：**互动故事、3D、AI 视频、AI 音频首发默认接入**：互动故事为第五个模板；3D 游戏（three.js）和 3D 素材首发就做；所有档位按 Seeds 计费；2D / 3D 起步工程对所有档位开放；P2.5 扩为媒体管线。厂商见 [media-models.md](media-models.md)。
 > - v0.9：生成架构从「题材引擎为主」转向「**编码 agent + 题材模板**」（采纳 ohmygame 的技术方向；P0 评审后定为直接用 Pi SDK、移植 ohmygame 的部分模块，不整体 fork；只接 Claude，首发只做 2D / Phaser），排行榜改为按游戏回放；P0 改为 ohmygame 代码评审加 agent 成本实测；生成成本和点数定价待重算。详见 [architecture.md](architecture.md)。
 > - v0.8：统一文档口径——题材按已定的 4 个引擎、商业化与成本按 pricing.md、年龄门槛 18+、评论移出 MVP、自动修复最多两次、路线图补上美术管线、清理已决定的待决问题。
-> - v0.7：支持用户在题材引擎内**引导式从 0 到 1** 做游戏；游戏可发布在 sparkgame，也可导出上架 **CrazyGames**（用户自己的开发者账号，限 Plus / Pro）。详见 [prd.md](prd.md) 4.3、4.6 节。
+> - v0.7：支持用户在题材引擎内**引导式从 0 到 1** 做游戏；游戏可发布在 Pocketgrove，也可导出上架 **CrazyGames**（用户自己的开发者账号，限 Plus / Pro）。详见 [prd.md](prd.md) 4.3、4.6 节。
 > - v0.6：生成架构定为**题材引擎为主**（见 [prd.md](prd.md) 第 3 节）；游戏包改为"引擎 + 游戏文档"打包的单 HTML；ohmygame 作为内部工具候选。
 > - v0.5：`studio/`（Claude-Code-Game-Studios）从核心产线降为**参考与精修工具**；自营游戏改为优先用自己的生成器制作；P0 改为"拆解验证"。
 > - v0.4：**先上海外版**。英文为默认语言，中文为第二语言；生成器使用 Claude API；国内版延后，届时另行解决模型备案与收费资质。
@@ -111,17 +112,17 @@ games/<gameId>/<gameVersion>/
                     sim 哈希、是否通过回放自检、来源（模板、改编自哪款、生成会话 id）
 ```
 - 游戏的源码仓库（项目工作区）保存在平台，改编时复制；游戏包是它的构建产物。导出 CrazyGames 时另打一份单 HTML。
-- 平台通过 spark-sdk 与游戏通信（postMessage + MessageChannel，协议见 [p1-contract.md](p1-contract.md) 第 6 节）：ready、存档读写（`save.load` / `save.write`）、服务器时间、挑战局开始与结束（种子下发、操作记录与分数提交）、游戏结束、激励广告位请求。存档、时间、分数都由外层平台页面处理，游戏拿不到任何凭证（见 [prd.md](prd.md) 4.7 节）。
-- 游戏只调用共享运行时里的**平台适配器**接口；发布到 sparkgame 时接 spark-sdk，导出 CrazyGames 时接 CrazyGames HTML5 SDK（存档、广告、`GameplayStart` 走对方 SDK，去掉 sparkgame 的登录、排行榜和外链）。同一份源码打两种包。
+- 平台通过 pocketgrove-sdk 与游戏通信（postMessage + MessageChannel，协议见 [p1-contract.md](p1-contract.md) 第 6 节）：ready、存档读写（`save.load` / `save.write`）、服务器时间、挑战局开始与结束（种子下发、操作记录与分数提交）、游戏结束、激励广告位请求。存档、时间、分数都由外层平台页面处理，游戏拿不到任何凭证（见 [prd.md](prd.md) 4.7 节）。
+- 游戏只调用共享运行时里的**平台适配器**接口；发布到 Pocketgrove 时接 pocketgrove-sdk，导出 CrazyGames 时接 CrazyGames HTML5 SDK（存档、广告、`GameplayStart` 走对方 SDK，去掉 Pocketgrove 的登录、排行榜和外链）。同一份源码打两种包。
 - 游戏放在与主站隔离的独立域名下，iframe sandbox 运行。
 
 ## 5. 架构
 
 ```
-sparkgame/
+pocket-grove/
   studio/     参考与精修工具（模板 clone，独立 git 仓库，父目录 ignore）
   platform/   Next.js 平台（含生成器前端与 API）
-  sdk/        spark-sdk.js
+  sdk/        pocketgrove-sdk.js
   games/      已上架的游戏包
   scripts/    publish-game：导出 → 校验 → 注入 SDK → 生成 manifest → 入库
   docs/       方案文档
@@ -148,7 +149,7 @@ sparkgame/
 | 阶段 | 内容 | 完成标志 |
 |---|---|---|
 | P0 ohmygame 评审 + 成本实测 | ~~代码评审~~ 已完成（[ohmygame-review.md](ohmygame-review.md)，结论：用 Pi SDK + 移植模块）；在 Linux 容器里用 Pi SDK 起一个最小生成服务，接 Claude Opus 5.5，用 Playwright 做无头试玩，测冷启动和资源；用一个粗糙的 Idle Clicker 模板生成几款游戏，记录每款的 token、美元成本、耗时和成功率 | 评审报告（已完成）+ 最小生成服务跑通 + agent 成本实测表 |
-| P1 共享运行时 + SDK + 首个模板 | 共享运行时（固定步长、带种子随机数、存档、服务器时间、离线收益、挑战局接口、平台适配器）、spark-sdk、Idle Clicker 模板（Phaser，`src/sim` / `src/view` / `game.config.json` 结构，确定性 lint）、服务端隔离回放 | 一个基于模板、符合契约的样例游戏 + 浏览器与服务端回放结果一致（设计见 [p1-contract.md](p1-contract.md)，按 v0.2 的说明取舍） |
+| P1 共享运行时 + SDK + 首个模板 | 共享运行时（固定步长、带种子随机数、存档、服务器时间、离线收益、挑战局接口、平台适配器）、pocketgrove-sdk、Idle Clicker 模板（Phaser，`src/sim` / `src/view` / `game.config.json` 结构，确定性 lint）、服务端隔离回放 | 一个基于模板、符合契约的样例游戏 + 浏览器与服务端回放结果一致（设计见 [p1-contract.md](p1-contract.md)，按 v0.2 的说明取舍） |
 | P2 平台 MVP | 发现页、详情、游玩页、游客匿名云存档与登录合并、离线收益、挑战局榜与每周赛季榜（合理性检查 + 前 100 名回放校验）、分享卡片与挑战链接、游客即玩、中英双语、广告位占位 | 手机和电脑都能完整游玩，存档跨会话保留，伪造分数上不了榜 |
 | P2.5 媒体管线 | 跑媒体比稿（图片脚本已在 `bakeoff/`，目前暂停；恢复时补上 3D、音频、视频）→ 定各画风、各类素材用哪家；服务端媒体路由（图片、3D、音频、视频）；预置画风的风格 ID / 参考图；去背景；参考照片人脸检测；GLB 压缩和音视频转码 | 比稿报告 + 路由配置 + 每款游戏的实测媒体成本 |
 | P3 生成器 MVP | 生成服务上服务端：每会话一个容器、模型网关、任务队列；互动故事模板、2D / 3D 起步工程；引导式从 0 到 1（8 步）与改编 → 发布管线（构建、静态检查、冒烟、回放自检，最多修复两次）→ 预览 → 对话修改 → 发布审核；创作画板的手机树状视图（素材派生、绑定游戏位置、版本回退，见 [prd.md](prd.md) 4.3.1）；点数扣/退 | 引导做出的游戏能上架并上榜 |

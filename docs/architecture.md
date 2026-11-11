@@ -70,7 +70,7 @@
 **共享运行时 `@pocketgrove/runtime`**（我们写、所有游戏共用，agent 只能调用）：
 - 固定步长循环、带种子的随机数、`ipow` 等确定性数学工具、命令记录、状态哈希。
 - 存档、服务器时间、离线收益（上限 8 小时）、激励广告、挑战局和赛季的接口。
-- 平台适配器：sparkgame 接 spark-sdk，导出时接 CrazyGames SDK（协议沿用 [p1-contract.md](p1-contract.md) 第 6、7 节）。
+- 平台适配器：Pocketgrove 接 pocketgrove-sdk，导出时接 CrazyGames SDK（协议沿用 [p1-contract.md](p1-contract.md) 第 6、7 节）。
 
 **agent 的权限**：
 - 可以改 `src/`、`game.config.json`、`assets.json`，可以生成和替换素材。
@@ -81,7 +81,7 @@
 
 **互动故事模板**（第五个模板）：
 - 分支剧情：场景节点、选项、变量和条件、多结局；每个场景可以带插图、背景音乐、配音和短视频过场。
-- 故事节点模型和检查（所有节点可达、没有死路、每个结局都能走到）**移植 ohmygame 的互动故事运行时和 `playable_check`**，改接我们的共享运行时：存档走 spark-sdk，静音响应平台的 `mute` 事件。
+- 故事节点模型和检查（所有节点可达、没有死路、每个结局都能走到）**移植 ohmygame 的互动故事运行时和 `playable_check`**，改接我们的共享运行时：存档走 pocketgrove-sdk，静音响应平台的 `mute` 事件。
 - 没有分数，所以**不进挑战局榜和赛季榜**，也不需要 sim 层和回放；分享卡改为「我走到了结局 3 / 5」，挑战链接改为「看看你会走到哪个结局」。
 - 文本和画面按全年龄标准审核（平台游玩不限年龄）。
 
@@ -223,7 +223,7 @@ P0 代码评审（[ohmygame-review.md](ohmygame-review.md)）的结论：ohmygam
 |---|---|
 | [prd.md](prd.md) | 第 0、3 节改为本文的架构；4.3 第 4 步改为「AI 改模板的配置」；4.3.1 的画板对象从 `game.json` 改为项目文件；4.7 的回放改为按游戏回放 |
 | [product-plan.md](product-plan.md) | 生成器技术要点、游戏包契约、架构、单位成本、路线图（P0 改为 ohmygame 代码评审加成本实测） |
-| [p1-contract.md](p1-contract.md) | spark-sdk、适配器、存档、确定性规则、失败模式继续有效；`game.json` 规则和 Idle Clicker 的 JSON 设计作废 |
+| [p1-contract.md](p1-contract.md) | pocketgrove-sdk、适配器、存档、确定性规则、失败模式继续有效；`game.json` 规则和 Idle Clicker 的 JSON 设计作废 |
 | [pricing.md](pricing.md) | 生成成本作废，P0 实测后重算 |
 | [open-source-references.md](open-source-references.md) | ohmygame 从「内部工具候选」改为「移植部分模块的来源」；agent 运行时用 Pi SDK |
 

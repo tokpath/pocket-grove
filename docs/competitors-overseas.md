@@ -40,7 +40,7 @@ YouTube Playables、Discord Activities、Telegram Mini Apps 都支持 HTML5 小�
 4. **重复游玩是机会**：带存档和成长线的游戏留存更好；Steam 玩家对标注 AI 的游戏评分更低。
 5. **细分机会**：单一题材或单一人群（儿童、教师、品牌）的专用生成器，大平台覆盖不到。
 
-## 3. 对 sparkgame 的影响
+## 3. 对 Pocketgrove 的影响
 
 **正面对手是 Astrocade**：同样是"信息流 + 生成器 + Web/手机"，资金多两个数量级。做一个泛泛的"AI 小游戏信息流"很难赢，需要更窄的切入点。
 
@@ -53,7 +53,7 @@ YouTube Playables、Discord Activities、Telegram Mini Apps 都支持 HTML5 小�
 
 **定价参考**：Rosebud 面向创作者是 $15–100/月；我们面向小白，入门档应明显更低（如 $5–10/月），但按粗估的单次从零生成成本（$0.4–0.6），$9.99 只够十几次生成——必须先实测成本，并把"改编 / 小改"做成主流用法。
 
-**自营游戏可同时投放 Poki / CrazyGames**：既能赚广告分成，也能给 sparkgame 引流；注意 Poki 的网页独占条款。
+**自营游戏可同时投放 Poki / CrazyGames**：既能赚广告分成，也能给 Pocketgrove 引流；注意 Poki 的网页独占条款。
 
 ## 参考资料
 - [Trends.vc – AI Game Generators: Play Feeds, Creator Payouts, Genre Makers](https://trends.vc/ai-game-generators-play-feeds-creator-payouts-genre-makers/)

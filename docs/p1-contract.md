@@ -1,4 +1,4 @@
-# P1 技术设计：游戏契约、spark-sdk 与首个引擎（v0.2，2026-11-11）
+# P1 技术设计：游戏契约、pocketgrove-sdk 与首个引擎（v0.2，2026-11-11）
 
 > **v0.2：生成架构已转向「编码 agent + 题材模板」，见 [architecture.md](architecture.md)。本文按下表部分作废，P1 范围以 architecture.md 和 product-plan.md 路线图为准。**
 >
@@ -9,9 +9,9 @@
 > | 3 game.json 规则 | **作废**（文本长度、颜色对比度、错误格式等细则可沿用到 `game.config.json` 的校验） |
 > | 4 确定性与回放 | **有效**，对象改为每款游戏的 `src/sim/` |
 > | 5 存档 | **有效** |
-> | 6 spark-sdk、7 适配器 | **有效** |
+> | 6 pocketgrove-sdk、7 适配器 | **有效** |
 > | 8 Idle Clicker | 玩法循环、公式、素材位、挑战局和赛季、可解性检查可作为 **Idle Clicker 模板**的设计输入；8.2 的 JSON 结构、8.4 词汇表、8.9 与 8 步引导的对应**作废** |
-> | 9 代码组织 | 部分有效：`sim-core`、`runtime`、`adapters`、`spark-sdk`、`replay` 保留；`engine-*`、`validator`、`bundler` 改为模板和发布管线 |
+> | 9 代码组织 | 部分有效：`sim-core`、`runtime`、`adapters`、`pocketgrove-sdk`、`replay` 保留；`engine-*`、`validator`、`bundler` 改为模板和发布管线 |
 > | 10 失败模式、11 验收 | 第 21–24 条（UGC JSON）改为 AI 代码的静态检查和冒烟测试，其余有效 |
 > | 12 待定 | 第 1 条（数值生成器）和第 2 条的引擎部分作废；第 5 条（音效包）被 AI 音频默认接入取代；第 3、4 条仍待定 |
 >
@@ -28,8 +28,8 @@
 | 校验 | 四层：结构 → 引用和上限 → 引擎可解性 → 内容安全；错误统一成「JSON Pointer + 错误码」交给 AI 修复 | 3.4 |
 | 确定性 | 固定 10 Hz tick；sim 里禁用系统时间、`Math.random` 和 `Math.pow` / `exp` / `log` 等不保证跨引擎一致的函数；用 lint、类型配置和三浏览器加 Node 的回放矩阵来强制 | 4 |
 | 排行榜分区 | 按「gameId + 数值哈希 + simVersion」分区：只改文案和美术不重置排行榜，改数值或引擎逻辑才重置 | 2.2 |
-| spark-sdk | 握手后改用 MessageChannel 专用通道；请求、响应、事件三种消息；首个响应里直接带上存档和服务器时间，省一次往返 | 6 |
-| 适配器 | 一套接口，三个实现：sparkgame、CrazyGames、本地开发；读系统时间只允许在适配器里 | 7 |
+| pocketgrove-sdk | 握手后改用 MessageChannel 专用通道；请求、响应、事件三种消息；首个响应里直接带上存档和服务器时间，省一次往返 | 6 |
+| 适配器 | 一套接口，三个实现：Pocketgrove、CrazyGames、本地开发；读系统时间只允许在适配器里 | 7 |
 | 首个引擎 | Idle Clicker：点击、生产建筑、升级、里程碑、转生、随机事件、成就；每款约 15 张图 | 8 |
 
 **需要你拍板的五件事**（第 12 节有详细理由）：
@@ -45,9 +45,9 @@
 ```
 ┌──────────── 平台页面 pocketgrove.gg（宿主）────────────┐
 │ 账号、存档、服务器时间、排行榜、广告抽象层、结果浮层    │
-│            ▲  spark-sdk（MessageChannel）              │
+│            ▲  pocketgrove-sdk（MessageChannel）              │
 │ ┌──────────┴──── 沙箱 iframe pocketgrove.games ──────┐ │
-│ │ adapter   SparkAdapter / CrazyGamesAdapter / Local │ │
+│ │ adapter   PocketgroveAdapter / CrazyGamesAdapter / Local │ │
 │ │ runtime   固定步长循环、命令录制、存档调度、后台处理│ │
 │ │ view      DOM 渲染、动画、音效（不影响结果）       │ │
 │ │ sim       纯函数：状态 + 命令 + tick → 新状态      │ │
@@ -107,7 +107,7 @@ games/<gameId>/<gameVersion>/
 
 ### 2.3 两种交付形态【待定，见第 12 节第 2 条】
 
-| | 平台模式（sparkgame 上游玩） | 单 HTML 模式（导出、存档备份） |
+| | 平台模式（Pocketgrove 上游玩） | 单 HTML 模式（导出、存档备份） |
 |---|---|---|
 | 结构 | 一个很小的 `index.html`，加载 `engine-idle-clicker-<hash>.js`、`game.json`、素材，全部来自 pocketgrove.games | 引擎、game.json、素材（base64）全部内联进一个文件 |
 | 缓存 | 引擎文件在所有同引擎游戏间共享，玩第二款时只下载 game.json 和素材 | 每款都要完整下载 |
@@ -260,7 +260,7 @@ games/<gameId>/<gameVersion>/
   - 引擎 simVersion 升级：按迁移函数链逐级升级（v1 → v2 → v3），迁移函数也属于 sim，浏览器和服务端用同一份。
 - 存档里不放任何个人信息、设备 ID 或账号信息；归属关系由平台在服务端记录。
 
-## 6. spark-sdk 协议
+## 6. pocketgrove-sdk 协议
 
 ### 6.1 建立通道
 
@@ -369,9 +369,9 @@ interface PlatformAdapter {
 
 ### 7.2 三个实现
 
-| 能力 | SparkAdapter（sparkgame） | CrazyGamesAdapter（导出包） | LocalAdapter（开发和 E2E） |
+| 能力 | PocketgroveAdapter（Pocketgrove） | CrazyGamesAdapter（导出包） | LocalAdapter（开发和 E2E） |
 |---|---|---|---|
-| 初始化 | spark-sdk 握手（6.1） | `await CrazyGames.SDK.init()`；加载时调 `loadingStart` / `loadingStop` | 立即返回 |
+| 初始化 | pocketgrove-sdk 握手（6.1） | `await CrazyGames.SDK.init()`；加载时调 `loadingStart` / `loadingStop` | 立即返回 |
 | 存档 | `save.*`（云存档） | `SDK.data.getItem / setItem`（同步调用，SDK 后台合并写入；上限 1MB；必须提交时打开 Progress Save） | `localStorage` |
 | 时间 | 服务器时间 | 本机时间（没有排行榜，离线收益仍然封顶 8 小时） | 本机时间，测试时可注入假时钟 |
 | 激励广告 | 平台的广告抽象层 | `SDK.ad.requestAd("rewarded", …)`；`adStarted` 时暂停并静音，`adFinished` 和 `adError` 时恢复；`unfilled`、`adblock`、`adCooldown`、`adsDisabled` 都按「没拿到奖励」处理，按钮显示稍后再试 | 1 秒后返回成功 |
@@ -571,8 +571,8 @@ packages/
     view/                DOM 界面
     balance/             数值生成器 + 机器人 + 可解性检查
   runtime/               浏览器外壳：固定步长循环、命令录制、存档调度、后台处理
-  adapters/              spark / crazygames / local
-  spark-sdk/             宿主端和游戏端的协议实现
+  adapters/              pocketgrove / crazygames / local
+  pocketgrove-sdk/             宿主端和游戏端的协议实现
   validator/             四层校验和错误格式（生成器、编辑器、发布管线共用）
   replay/                Node 回放器
   bundler/               两种交付形态的打包
@@ -581,7 +581,7 @@ fixtures/                录好的对局，供回放矩阵使用
 
 - TypeScript（strict）、pnpm workspaces、Vite 打包、Ajv 做 JSON Schema 校验、Playwright 跑三个浏览器的 E2E、Node 22 跑回放。
 - schema 只写一份（TypeBox），同时生成：给 AI 的 JSON Schema、给 Ajv 的校验器、给引擎的 TS 类型，避免三份定义不一致。
-- 这是对 product-plan 第 5 节目录的细化：`sdk/` 并入 `packages/spark-sdk`，`platform/` 仍是 Next.js 平台，`games/` 和 `scripts/` 不变。
+- 这是对 product-plan 第 5 节目录的细化：`sdk/` 并入 `packages/pocketgrove-sdk`，`platform/` 仍是 Next.js 平台，`games/` 和 `scripts/` 不变。
 
 ## 10. 失败模式清单（写代码之前先列出来）
 
@@ -628,7 +628,7 @@ fixtures/                录好的对局，供回放矩阵使用
 |---|---|---|
 | 样例游戏 | Moon Garden 通过四层校验，在三个浏览器里可玩，存档跨刷新保留 | 三个浏览器的截图 |
 | 回放矩阵 | 一批录好的对局（挑战局、带离线和转生的 2 小时赛季、批量购买、随机事件、旧版本存档迁移），在 Chromium、WebKit、Firefox 和 Node 上跑，最终状态哈希全部相同 | `reports/p1/replay-matrix.json` |
-| spark-sdk | 测试宿主页面和游戏放在两个不同的本地 origin 上，跑一遍：握手、读写存档、服务器时间、激励广告、挑战局提交、服务端回放通过；改过分数的提交被拒；冒充的消息被忽略 | `reports/p1/sdk-e2e.json` + 截图 |
+| pocketgrove-sdk | 测试宿主页面和游戏放在两个不同的本地 origin 上，跑一遍：握手、读写存档、服务器时间、激励广告、挑战局提交、服务端回放通过；改过分数的提交被拒；冒充的消息被忽略 | `reports/p1/sdk-e2e.json` + 截图 |
 | 校验器 | 一组故意写坏的 game.json（覆盖第 10 节第 21–24 条），每份都返回预期的错误路径和错误码 | `reports/p1/validator.json` |
 | 性能【假设】 | 中端安卓机上每个 tick ≤ 0.2 ms；打开到可玩 ≤ 3 秒（4G 模拟） | 写进 `replay-matrix.json` |
 
@@ -641,7 +641,7 @@ fixtures/                录好的对局，供回放矩阵使用
    - 理由：AI 直接写几十个数字，很容易出现卡关或数字爆炸，修复要来回调用模型，既慢又花钱；公式生成的数值天然能通过检查，「升级快一倍」这类小改也只是改一个旋钮。
    - 影响：PRD 4.3 第 4 步改为「AI 根据设定选节奏和旋钮，数值生成器出曲线」。
 2. **平台上共享引擎，单个 HTML 只用于导出。**
-   - 建议：在 sparkgame 上，引擎文件在同引擎的所有游戏间共享缓存，每款只下载自己的 game.json 和素材；单个 HTML 用于 CrazyGames 导出和归档。
+   - 建议：在 Pocketgrove 上，引擎文件在同引擎的所有游戏间共享缓存，每款只下载自己的 game.json 和素材；单个 HTML 用于 CrazyGames 导出和归档。
    - 理由：信息流里连着玩几款时，第二款开始明显更快，有利于「3 秒可玩」；安全性不变，因为都在同一个沙箱域名下，CSP 禁止外连。
    - 影响：product-plan 第 4 节「发布时打包成单个 HTML」改为两种交付形态。
 3. **大数先用双精度浮点。**
