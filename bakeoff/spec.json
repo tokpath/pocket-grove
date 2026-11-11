@@ -1,0 +1,109 @@
+{
+  "styles": {
+    "cozy": {
+      "label": "Cozy hand-drawn",
+      "text": "cozy hand-drawn illustration, soft colored-pencil and watercolor texture, warm pastel palette, gentle rounded shapes, thin soft brown outlines",
+      "palette": [[244, 226, 198], [232, 170, 140], [158, 196, 170], [120, 86, 70], [250, 240, 220]],
+      "providers": ["recraft", "gemini", "openai"]
+    },
+    "flat": {
+      "label": "Flat cartoon",
+      "text": "flat vector cartoon, clean solid color fills, bold dark outlines, high saturation, simple cel shading, polished mobile game art",
+      "palette": [[255, 94, 91], [255, 206, 84], [72, 201, 176], [64, 115, 255], [40, 40, 60]],
+      "providers": ["recraft", "gemini", "openai"]
+    },
+    "pixel": {
+      "label": "Pixel art",
+      "text": "pixel art game sprite, limited 16-color palette, crisp hard-edged pixels, no anti-aliasing, retro 16-bit look",
+      "palette": [[26, 28, 44], [93, 39, 93], [177, 62, 83], [239, 125, 87], [255, 205, 117], [167, 240, 112], [56, 183, 100], [41, 54, 111]],
+      "providers": ["retro", "recraft", "gemini"]
+    }
+  },
+  "anchorPrompt": "A style reference sheet for a cozy casual mobile game: a small wooden shop front on the left, one friendly shopkeeper character in the middle, and three item icons (a coin, a potted plant, a pastry) on the right, evenly spaced on a plain light background, no text",
+  "engines": {
+    "idle": {
+      "label": "Idle Clicker — Cozy Bakery",
+      "theme": "a cozy neighborhood bakery idle game",
+      "assets": [
+        { "id": "bread_basket", "category": "icon", "transparent": true, "group": "main", "prompt": "a big wicker basket overflowing with fresh bread loaves, the main tappable object" },
+        { "id": "up_oven", "category": "icon", "transparent": true, "group": "upgrades", "prompt": "a brick bread oven with a warm glow" },
+        { "id": "up_rolling_pin", "category": "icon", "transparent": true, "group": "upgrades", "prompt": "a wooden rolling pin with a dusting of flour" },
+        { "id": "up_flour_mill", "category": "icon", "transparent": true, "group": "upgrades", "prompt": "a small windmill flour mill" },
+        { "id": "up_delivery_bike", "category": "icon", "transparent": true, "group": "upgrades", "prompt": "a delivery bicycle with a bread crate on the front" },
+        { "id": "up_bakery_stall", "category": "icon", "transparent": true, "group": "upgrades", "prompt": "a market stall with a striped awning" },
+        { "id": "up_golden_croissant", "category": "icon", "transparent": true, "group": "upgrades", "prompt": "a shiny golden croissant trophy" },
+        { "id": "honey_jar", "category": "icon", "transparent": true, "group": "upgrades", "prompt": "a jar of honey with a wooden dipper" },
+        { "id": "cinnamon_roll", "category": "icon", "transparent": true, "group": "upgrades", "prompt": "a frosted cinnamon roll" },
+        { "id": "coin", "category": "icon", "transparent": true, "group": "currency", "prompt": "a round gold coin stamped with a wheat symbol" },
+        { "id": "gem", "category": "icon", "transparent": true, "group": "currency", "prompt": "a pink faceted gem" },
+        { "id": "baker_idle", "category": "character", "transparent": true, "group": "baker", "prompt": "a friendly adult baker with a white apron and a chef hat, standing relaxed" },
+        { "id": "baker_happy", "category": "character", "transparent": true, "group": "baker", "prompt": "the same friendly adult baker with a white apron and a chef hat, cheering with a loaf raised high" },
+        { "id": "storefront", "category": "scene", "transparent": false, "group": "scene", "prompt": "the front of a small bakery on a sunny street, shop window full of bread" },
+        { "id": "upgrade_panel", "category": "scene", "transparent": false, "group": "scene", "prompt": "an empty wooden menu board panel for listing upgrades, game UI background" }
+      ]
+    },
+    "cultivation": {
+      "label": "Idle RPG / Cultivation — Cloud Peak Sect",
+      "theme": "an idle cultivation game set in a mountain sect above the clouds",
+      "assets": [
+        { "id": "jade_pill", "category": "icon", "transparent": true, "group": "items", "prompt": "a glowing jade-green elixir pill" },
+        { "id": "spirit_sword", "category": "icon", "transparent": true, "group": "items", "prompt": "a slender flying sword with a faint blue aura" },
+        { "id": "talisman", "category": "icon", "transparent": true, "group": "items", "prompt": "a yellow paper talisman with red brush marks, no readable text" },
+        { "id": "cauldron", "category": "icon", "transparent": true, "group": "items", "prompt": "a bronze three-legged alchemy cauldron with rising steam" },
+        { "id": "lotus_seed", "category": "icon", "transparent": true, "group": "items", "prompt": "a luminous lotus seed pod" },
+        { "id": "ancient_scroll", "category": "icon", "transparent": true, "group": "items", "prompt": "a rolled ancient scroll tied with a red cord" },
+        { "id": "spirit_stone", "category": "icon", "transparent": true, "group": "currency", "prompt": "a translucent spirit stone crystal" },
+        { "id": "qi_essence", "category": "icon", "transparent": true, "group": "currency", "prompt": "a swirling orb of white-blue qi energy" },
+        { "id": "cultivator_r1", "category": "character", "transparent": true, "group": "cultivator", "prompt": "a young adult cultivator in plain grey robes sitting cross-legged in meditation, realm one: humble beginner" },
+        { "id": "cultivator_r2", "category": "character", "transparent": true, "group": "cultivator", "prompt": "the same young adult cultivator in pale blue robes sitting cross-legged in meditation, realm two: a soft glow around the body" },
+        { "id": "cultivator_r3", "category": "character", "transparent": true, "group": "cultivator", "prompt": "the same young adult cultivator in white and gold robes floating cross-legged, realm three: a radiant golden aura" },
+        { "id": "sect_elder", "category": "character", "transparent": true, "group": "cultivator", "prompt": "a kind elderly sect master with a long white beard and a wooden staff" },
+        { "id": "mountain_gate", "category": "scene", "transparent": false, "group": "scene", "prompt": "a stone mountain gate and stairs leading up into the clouds" },
+        { "id": "cave_abode", "category": "scene", "transparent": false, "group": "scene", "prompt": "a quiet meditation cave with a spring and glowing crystals" },
+        { "id": "realm_panel", "category": "scene", "transparent": false, "group": "scene", "prompt": "an empty ornate jade panel frame for showing cultivation progress, game UI background" }
+      ]
+    },
+    "tycoon": {
+      "label": "Tycoon — Whisker Café",
+      "theme": "a cat café management game",
+      "assets": [
+        { "id": "latte", "category": "icon", "transparent": true, "group": "menu", "prompt": "a latte with cat-face latte art" },
+        { "id": "fish_cookie", "category": "icon", "transparent": true, "group": "menu", "prompt": "a fish-shaped cookie" },
+        { "id": "matcha_cake", "category": "icon", "transparent": true, "group": "menu", "prompt": "a slice of matcha layer cake" },
+        { "id": "berry_tart", "category": "icon", "transparent": true, "group": "menu", "prompt": "a small berry tart" },
+        { "id": "paw_pancake", "category": "icon", "transparent": true, "group": "menu", "prompt": "a stack of pancakes shaped like a cat paw" },
+        { "id": "sofa", "category": "icon", "transparent": true, "group": "furniture", "prompt": "a cozy two-seat sofa with a cushion" },
+        { "id": "cat_tower", "category": "icon", "transparent": true, "group": "furniture", "prompt": "a carpeted cat climbing tower" },
+        { "id": "tip_jar", "category": "icon", "transparent": true, "group": "furniture", "prompt": "a glass tip jar with a few coins" },
+        { "id": "cafe_coin", "category": "icon", "transparent": true, "group": "currency", "prompt": "a gold coin stamped with a paw print" },
+        { "id": "shop_sign", "category": "icon", "transparent": true, "group": "furniture", "prompt": "a hanging wooden café sign shaped like a cat head, no readable text" },
+        { "id": "owner", "category": "character", "transparent": true, "group": "people", "prompt": "a cheerful adult café owner with an apron holding a tray" },
+        { "id": "cust_student", "category": "character", "transparent": true, "group": "people", "prompt": "an adult college student customer with a backpack and headphones" },
+        { "id": "cust_office", "category": "character", "transparent": true, "group": "people", "prompt": "an adult office worker customer in a suit holding a coffee" },
+        { "id": "cust_grandma", "category": "character", "transparent": true, "group": "people", "prompt": "an elderly grandma customer with a knitted cardigan holding a cat" },
+        { "id": "cafe_interior", "category": "scene", "transparent": false, "group": "scene", "prompt": "the interior of a warm cat café with tables, plants, and cats lounging" }
+      ]
+    },
+    "merge": {
+      "label": "Merge — Moon Garden",
+      "theme": "a moonlit garden merge game where items evolve when merged",
+      "assets": [
+        { "id": "a1_seed", "category": "icon", "transparent": true, "group": "chainA", "prompt": "merge chain level 1 of 8: a single glowing seed" },
+        { "id": "a2_sprout", "category": "icon", "transparent": true, "group": "chainA", "prompt": "merge chain level 2 of 8: a tiny two-leaf sprout in soil" },
+        { "id": "a3_seedling", "category": "icon", "transparent": true, "group": "chainA", "prompt": "merge chain level 3 of 8: a seedling with four leaves in a small mound" },
+        { "id": "a4_bush", "category": "icon", "transparent": true, "group": "chainA", "prompt": "merge chain level 4 of 8: a small round bush" },
+        { "id": "a5_flower_bush", "category": "icon", "transparent": true, "group": "chainA", "prompt": "merge chain level 5 of 8: a bush with pale silver flowers" },
+        { "id": "a6_young_tree", "category": "icon", "transparent": true, "group": "chainA", "prompt": "merge chain level 6 of 8: a young tree with silver blossoms" },
+        { "id": "a7_moon_tree", "category": "icon", "transparent": true, "group": "chainA", "prompt": "merge chain level 7 of 8: a blossoming tree with glowing moon-shaped fruit" },
+        { "id": "a8_ancient_tree", "category": "icon", "transparent": true, "group": "chainA", "prompt": "merge chain level 8 of 8: a majestic ancient moon tree with a soft halo" },
+        { "id": "b1_pebble", "category": "icon", "transparent": true, "group": "chainB", "prompt": "merge chain level 1 of 6: a small grey pebble" },
+        { "id": "b2_smooth_stone", "category": "icon", "transparent": true, "group": "chainB", "prompt": "merge chain level 2 of 6: a smooth river stone with a faint sparkle" },
+        { "id": "b3_crystal_shard", "category": "icon", "transparent": true, "group": "chainB", "prompt": "merge chain level 3 of 6: a single violet crystal shard" },
+        { "id": "b4_crystal_cluster", "category": "icon", "transparent": true, "group": "chainB", "prompt": "merge chain level 4 of 6: a cluster of violet crystals" },
+        { "id": "b5_moonstone", "category": "icon", "transparent": true, "group": "chainB", "prompt": "merge chain level 5 of 6: a polished glowing moonstone" },
+        { "id": "b6_star_gem", "category": "icon", "transparent": true, "group": "chainB", "prompt": "merge chain level 6 of 6: a radiant star-shaped gem" },
+        { "id": "garden_board", "category": "scene", "transparent": false, "group": "scene", "prompt": "a top-down moonlit garden ground with a soft grid of grass tiles, game board background" }
+      ]
+    }
+  }
+}
